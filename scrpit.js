@@ -125,8 +125,44 @@ function getTodaysClass(dayOFWeek){
   }
 }
 
-getTodaysClass('Monday');
-getTodaysClass('Thursday')
-getTodaysClass('Saturday')
-getTodaysClass('Sunday')
-getTodaysClass('Hot Girl')
+// getTodaysClass('Monday');
+// getTodaysClass('Thursday')
+// getTodaysClass('Saturday')
+// getTodaysClass('Sunday')
+// getTodaysClass('Hot Girl')
+
+var fruits = ['Apple','Orange','Banana','Kiwi','Watermelon'];
+
+console.log(fruits[0]);
+console.log(fruits[3]);
+
+function printFruits(fruits){
+  for(let i = 0; i < fruits.length; i++) {
+    console.log(`Fruit ${i} is ${fruits[i]}`);
+  }
+}
+
+//printFruits();
+
+function printFruits2(fruits){
+  for(let i = fruits.length - 1; i >= 0 ; i--) {
+    console.log(`Fruit ${i} is ${fruits[i]}`);
+  }
+}
+
+//printFruits2();
+
+// let cars = ['Audi','Chrysler','Ford','Honda','Subaru', 'Toyota']
+// printFruits2(cars)
+
+function isDivisibleByFive() {
+  for ( let i = 1; i <= 30; i += 3) {
+    if(i % 5 == 0) {
+      console.log(`${i} is divisible by 5`);
+    } else {
+      console.log(`${i} is not divisible by 5`);
+    }
+  } 
+}
+
+isDivisibleByFive();
