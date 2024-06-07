@@ -25,10 +25,10 @@ function numberDescription(num) {
   } else{ 
     evenOrOdd = "Odd"
   }
-  console.log(`${num} in ${posOrNeg} and ${evenOrOdd}`)
+  console.log(`${num} is ${posOrNeg} and ${evenOrOdd}`)
 }
 
-numberDescription(-9)
+numberDescription(-7)
 
 // Write a function that calculates the ticket price for a passed in age with the following conditions: age below 12 pay a ticket price of 5, age below 18 pay a ticket price of 10, age below 60 pay a ticket price of 20, age over 60 pay a ticket price of 15.
 
