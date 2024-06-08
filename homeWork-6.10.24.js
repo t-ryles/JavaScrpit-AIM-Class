@@ -112,7 +112,55 @@ highToLow(34,12,32)
 
 // Write a function that console.logs the sum of two arrays (the sum of all their elements). The arrays will only include integer numbers.
 
+let listOne = [2,45,8,5,67];
+let listTwo = [4,36,7,8,13];
+
+function sumOfArrays(x, y) {
+  let total = 0
+
+  for( let i = 0; i < x.length; i++) {
+    total += x[i]
+  }
+
+  for( let i = 0; i < y.length; i++) {
+    total += y[i]
+  }
+
+  console.log(total)
+}
+
+sumOfArrays(listOne, listTwo)
+
 // Write a function to check if a string passed into the function contains the letter ‘s’. Print yes to the console if it does and no if it does not.
+
+function containsletter(str){
+  let letter = 's';
+  let count = 0;
+  for ( let i = 0; i < str.length; i++) {
+    if (str[i] == letter) {
+      count += 1;
+    }
+  }
+
+  if ( count > 0 ) {
+    console.log('Yes');
+  } else {
+    console.log('No');
+  }
+}
+
+containsletter('hape')
+
 
 // Write a function that finds the summation of every number from 1 to a number passed into the function. 
 // The number passed in will always be a positive number greater than 0.
+
+function summation(num){
+  if ( num == 0 || num == 1) {
+    return 1;
+  }
+
+  return num + summation(num - 1);
+}
+
+console.log(summation(5));
