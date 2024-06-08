@@ -75,6 +75,12 @@ bmiCalculator(200, 86)
 
 // Write a function to sort 3 numbers from highest to lowest and print the sorted numbers to the console.
 
+function highToLow(num1, num2, num3) {
+ 
+}
+
+highToLow(34,12,32)
+
 // Write a function that console.logs the sum of two arrays (the sum of all their elements). The arrays will only include integer numbers.
 
 // Write a function to check if a string passed into the function contains the letter ‘s’. Print yes to the console if it does and no if it does not.
