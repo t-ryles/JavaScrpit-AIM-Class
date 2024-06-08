@@ -76,7 +76,36 @@ bmiCalculator(200, 86)
 // Write a function to sort 3 numbers from highest to lowest and print the sorted numbers to the console.
 
 function highToLow(num1, num2, num3) {
- 
+  let high, mid, low
+ if (num1 >= num2 && num1 >= num3) {
+  high = num1;
+  if (num2 >= num3) {
+    mid = num2;
+    low = num3;
+  } else {
+    mid = num3;
+    low = num2;
+  }
+ }  else if (num2 >= num1 && num2 >= num3) {
+  high = num2;
+  if (num1 >= num3) {
+    mid = num1;
+    low = num3;
+  } else {
+    mid = num3;
+    low = num1;
+  }
+} else {
+  high = num3;
+  if (num1 >= num2) {
+    mid = num1;
+    low = num2;
+  } else {
+    mid = num2;
+    low = num1;
+  }
+}
+console.log(high, mid, low);
 }
 
 highToLow(34,12,32)
