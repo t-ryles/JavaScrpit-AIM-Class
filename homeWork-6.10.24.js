@@ -161,5 +161,13 @@ function summation(num){
   }
   return num + summation(num - 1);
 }
-
 console.log(summation(5));
+
+function summation2(num){
+  let sum = 0
+  for (let i = num; i >= 1; i--) {
+    sum += i
+  }
+  return sum
+}
+console.log(summation2(6));
