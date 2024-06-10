@@ -133,8 +133,8 @@ function getTodaysClass(dayOFWeek){
 
 var fruits = ['Apple','Orange','Banana','Kiwi','Watermelon'];
 
-console.log(fruits[0]);
-console.log(fruits[3]);
+//console.log(fruits[0]);
+//console.log(fruits[3]);
 
 function printFruits(fruits){
   for(let i = 0; i < fruits.length; i++) {
@@ -164,5 +164,80 @@ function isDivisibleByFive() {
     }
   } 
 }
+//isDivisibleByFive();
 
-isDivisibleByFive();
+// Notes 6/10/2024
+let age = "25"
+function sendMessageBasedOnAge(age) {
+  switch(age) {
+    case 25:
+      console.log("Looking great!");
+      break;
+    case 50:
+      console.log("Getting up there, aren't you.");
+      break;
+    default:
+      console.log("Man you are old!"); 
+  }
+}
+//sendMessageBasedOnAge(age)
+
+
+function containsletter(str){
+  let letter = 's';
+  let count = 0;
+  for ( let i = 0; i < str.length; i++) {
+    if (str[i] == letter) {
+      console.log("Yes");
+      break;
+    } else if (i == str.length) {
+      console.log("No.");
+    }
+  }
+}
+//containsletter('Mesopotamia')
+
+function countToTwentyByThree() {
+  for( i = 1; i <= 20 ; i++) {
+    if (i % 3 == 0) {
+      continue;
+    } else {
+      console.log('i is ' + i);
+    }
+  }
+}
+//countToTwentyByThree();
+
+function sayHi() {
+  let name = prompt('What is your name?')
+  console.log(`Hi, ${name}`);
+}
+
+//sayHi();
+
+// While true do this
+ //let num = prompt(`Give a number to count down from.`)
+
+// while (num > 4 ) {
+//   console.log (`The number is ${num}.`)
+//   num--;
+// }
+// console.log(`I don't like to count below 4.`);
+
+// Do while
+// do {
+//   console.log(`The number is ${num}.`);
+//   num--;
+// } while (num > 4);
+// console.log(`I don't like to count below 4.`);
+
+// Function expression
+
+
+function getBalanceOfAccount(deposit, withdrawl){
+  let balance = deposit - withdrawl;
+  return balance;
+}
+
+let bal = getBalanceOfAccount(150, 100)
+console.log(`Your balance is $${bal}.`);
