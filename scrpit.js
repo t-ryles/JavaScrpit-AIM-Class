@@ -231,13 +231,116 @@ function sayHi() {
 // } while (num > 4);
 // console.log(`I don't like to count below 4.`);
 
-// Function expression
-
-
+// Function delecration
 function getBalanceOfAccount(deposit, withdrawl){
   let balance = deposit - withdrawl;
   return balance;
 }
 
+// Function expresssion
 let bal = getBalanceOfAccount(150, 100)
-console.log(`Your balance is $${bal}.`);
+//console.log(`Your balance is $${bal}.`);
+
+let favoriteFood = function() {
+  let name = prompt("What is your name?")
+  if (name == 'David') {
+    return("Tacos");
+  } else{
+    return("Pizza");
+  }
+}
+//console.log(`My favorite food is ${favoriteFood()}`);
+
+// Hosting
+var x = 10;
+//console.log(`x is ${x}`);
+// Step 1: var x
+// Step 2: x = 10
+// Step 3: console.log(x)
+
+//console.log( `y = ${y}`);
+var y = 20;
+// Step 1: var y
+// Step 2: console.log(y)
+// Step 3: y = 20
+
+//console.log(`z = ${z}`);
+let z = 30;
+
+//countTheMummies(20);
+
+function countTheMummies(numOfMummies) {
+  if (numOfMummies > 15) {
+    console.log(`I am going to die.`);
+  } else if (numOfMummies >= 1) {
+    console.log(`Maybe I can run away!`);
+  } else {
+    console.log(`Thanks goodness, no Mummies`);
+  }
+}
+
+//countTheVombies(14);
+
+var countTheVombies = function(numOfVombies){
+  if(numOfVombies > 15) {
+    console.log(`Argh! Zombies!`);
+  } else if(numOfVombies >= 1){
+    console.log('To many Zombies for my taste.');
+  } else {
+    console.log(`No zombies!`);
+  }
+ }
+
+
+// Scope
+/// Global scope
+ function getGroceries(day) {
+  if (day == 'wednesday') {
+    console.log('I need to buy ' + fruits[2]);
+  } else if ( day == 'friday') {
+    console.log(`Today I will buy ${fruits[1]} and ${fruits[4]}`);
+  } else {
+    console.log('Not shopping today.');
+  }
+ }
+
+//  getGroceries('tuesday');
+//  getGroceries('friday');
+//  getGroceries('wednesday');
+
+function getAreaOfHouse(len, wid) {
+  let area = len * wid
+ }
+
+ //getAreaOfHouse();
+ //console.log(`The area of the house is ${area}`);
+
+ /// Function Scope
+ function functionScopeExample() {
+  var depoisteAmount = 200;
+  if (depoisteAmount < 10000) {
+    var isInsured = true;
+  }
+  console.log(`Deposite amount is ${depoisteAmount}`);
+  console.log(`Is the depsote amount insured? ${isInsured}`);
+ }
+
+//functionScopeExample();
+
+ // Block Scope ; let and const can't be accessed outside of code block.
+function blockScopeExample(risk) {
+  let depoisteAmount = 200;
+  if (depoisteAmount < 10000) {
+    let isInsured = true;
+    if(risk == 1) {
+      isInsured = false; // lexisco scope
+      console.log(`What is isInsured? ${isInsured} `);
+    }
+    console.log(`The deposite amount is ${depoisteAmount}`);
+  }
+  console.log(`Deposite amount is ${depoisteAmount}`);
+  // console.log(`Is the depsote amount insured? ${isInsured}`);
+ }
+
+blockScopeExample();
+blockScopeExample(1);
