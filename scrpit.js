@@ -237,7 +237,7 @@ function getBalanceOfAccount(deposit, withdrawl){
   return balance;
 }
 
-// Function expresssion
+//! Function expresssion
 let bal = getBalanceOfAccount(150, 100)
 //console.log(`Your balance is $${bal}.`);
 
@@ -292,7 +292,7 @@ var countTheVombies = function(numOfVombies){
  }
 
 
-// Scope
+//! Scope
 /// Global scope
  function getGroceries(day) {
   if (day == 'wednesday') {
@@ -327,7 +327,7 @@ function getAreaOfHouse(len, wid) {
 
 //functionScopeExample();
 
- // Block Scope ; let and const can't be accessed outside of code block.
+ //! Block Scope ; let and const can't be accessed outside of code block.
 function blockScopeExample(risk) {
   let depoisteAmount = 200;
   if (depoisteAmount < 10000) {
@@ -342,5 +342,53 @@ function blockScopeExample(risk) {
   // console.log(`Is the depsote amount insured? ${isInsured}`);
  }
 
-blockScopeExample();
-blockScopeExample(1);
+// blockScopeExample();
+// blockScopeExample(1);
+
+//* Notes 6/12/2024
+
+//? Named fuction
+// function calculateTip(preTip, tipPercent) {
+//   const tipResult = preTip * tipPercent;
+//   return tipResult;
+// }
+
+const preTipTotal = 100.00;
+const tipPercentage = .15;
+// const tipCost = calculateTip(preTipTotal, tipPercentage); // Named function
+
+// const totalBill = preTipTotal + tipCost;
+// console.log(`Your total bill is $${totalBill}.`);
+
+//? Annon function
+
+// const tipCost = function(preTip, tipPercentage) { // Anonymons function
+//   const tipResult = preTip * tipPercentage;
+//   return tipResult;
+// } 
+
+// const totalBill = preTipTotal + tipCost(preTipTotal, tipPercentage)
+// console.log(`Your total bill is $${totalBill}.`)
+
+//? Arrow Function : ([arg])=> { [JS Statments] }
+
+const tipCost = (preTip, tipPercentage) => {
+  //const tipResult = preTip * tipPercentage;
+  return tipResult = preTip * tipPercentage;
+}
+const totalBill = preTipTotal + tipCost(preTipTotal, tipPercentage);
+//console.log(`Your total bill is $${totalBill}.`);
+
+const roundTwo = (n, step) => {
+  let remainder = n % step;
+  return n - remainder + (remainder < step / 2 ? 0 : step);
+  // condition t or f ? if True : False
+}
+console.log(roundTwo(41,3));
+
+//* Arrow functions tricks
+const sum = (num1, num2) => num1 + num2;
+const square = num => num * num;
+const addTwoNumbers = () => 5 + 3;
+
+//? Objects
