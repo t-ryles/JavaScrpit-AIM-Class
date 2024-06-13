@@ -392,3 +392,124 @@ const square = num => num * num;
 const addTwoNumbers = () => 5 + 3;
 
 //? Objects
+// Objects have properties and methods( functions)
+const vehicle = {
+  name: 'Fait',
+  model: '500',
+  weight: 850,
+  color: 'White',
+  start(speed) {
+    console.log(`Starting car.`);
+    for( let i = 0; i <= speed; i += 5) {
+      console.log(`Accelerating at ${i} mph.`);
+    }
+    console.log(`Readched desired speed.`);
+  },
+  makeAndModel: function () {
+    return this.name + " " + this.model;
+  },
+  weightInKg: () => {
+    // Arrow functions has no reference to this.
+    return vehicle.weight + 'kg'
+  }
+}
+// -> Accessing objects
+// objName.Property -> dot notation
+// objName['property']
+// objName[expression]
+
+//console.log(`My newest car is a ${vehicle.color} ${vehicle.makeAndModel()}.`);
+// vehicle.makeAndModel is function hints the ()
+//console.log(`My ${vehicle.name}'s weight is ${vehicle.weightInKg()}`);
+//console.log(vehicle.start(55));
+
+const adult = { firstName: 'Bob', lastName: 'Ross', age: 50, eyeColor: 'Blue'}
+
+//? Creating pbjects
+const duck1 = {}; // Prefered way
+const duck2 = new Object();
+
+duck1.color = 'Magenta'
+//console.log(duck1);
+let duck1Color = duck1['color']
+//console.log(duck1Color);
+
+const person = {
+  name: 'Bill',
+  age: 54,
+  2: 'Thompson',
+  'Joe Cool': 'Snoopy'
+}
+
+// Adding properties to Objects
+//console.log(person);
+person.jeanSize = 42
+//console.log(person);
+//console.log(person['name']); // Bracket notation
+person.country = 'USA';
+//console.log(person);
+person.name = 'John'
+//console.log(person);
+
+let i = 'Joe Cool';
+//console.log(person[i]);
+
+person[i] = 'Spike';
+//console.log(person);
+
+// Delete property
+delete person.name;
+// console.log(person.name);
+// console.log(person);
+
+//console.log('country' in person) // Return t or f if '' is in object
+//console.log('name' in person)
+
+//! Accesing properties within Objects
+//console.log(Object.keys(person));
+//console.log(person.2); // incorrect
+//console.log(person[2]);
+//person.2 = 'Johnson' // incorrect
+person[2] = 'Johnson';
+//console.log(person);
+//person.'2' = 'Baird'; // incorrect
+person['2'] = 'Baird';
+//console.log(person);
+person[1 + 1] = 'Smith';
+//console.log(person);
+//person.Joe Cool = 'Sunny'; // incorrect
+//person."Joe Cool"= 'Sunny'; // incorrect
+//person[Joe Cool] = 'Sunny'; // incorrect
+person["Joe Cool"] = 'Sunny';
+//console.log(person);
+
+const mySelf = {
+  name : 'John',
+  age: 30,
+  myCars: {
+    car1: 'Ford',
+    car2: 'BMW',
+    car3: 'Fiat'
+  },
+  myClasses: [
+    {
+      className: 'Science',
+      roomNumber : '102',
+      teacher: `O'Brady`
+    },
+    {
+      className: 'History',
+      roomNumber: '303',
+      teacher: `Hanon`,
+      gpa: 3.5
+    }
+  ]
+}
+
+let venue = 'QUEST CENTER';
+let venueFormatted = venue.toLowerCase();
+console.log(venueFormatted);
+
+let price = 5.8679132;
+let priceFormatted = price.toFixed(2);
+console.log(priceFormatted);
