@@ -384,7 +384,7 @@ const roundTwo = (n, step) => {
   return n - remainder + (remainder < step / 2 ? 0 : step);
   // condition t or f ? if True : False
 }
-console.log(roundTwo(41,3));
+//console.log(roundTwo(41,3));
 
 //* Arrow functions tricks
 const sum = (num1, num2) => num1 + num2;
@@ -508,8 +508,73 @@ const mySelf = {
 
 let venue = 'QUEST CENTER';
 let venueFormatted = venue.toLowerCase();
-console.log(venueFormatted);
+//console.log(venueFormatted);
 
 let price = 5.8679132;
 let priceFormatted = price.toFixed(2);
-console.log(priceFormatted);
+//console.log(priceFormatted);
+
+//? Arrays
+// Adding to array
+const treeFruits = ['Apple', 'Banana', 'Orange']
+// console.log(treeFruits.length); // length of array
+// console.log(treeFruits);
+// treeFruits.push('Kiwi')
+// console.log(treeFruits);
+// treeFruits.pop(); // remove last
+// console.log(treeFruits);
+// console.log(treeFruits.length);
+treeFruits[3] = 'Dragon Fruit'
+// console.log(treeFruits);
+treeFruits[4] = 'Peach'
+// console.log(treeFruits);
+
+// const treeFruitsStr = treeFruits.toString();
+// console.log(treeFruitsStr); // Array to string
+
+// treeFruits.sort(); // Alphbetical order
+// console.log(treeFruits);
+// console.log(treeFruits[treeFruits.length - 1]);
+
+// Looping
+treeFruits.forEach((item, index) => {
+  //console.log(`Item number ${index + 1}: ${item}.`);
+})
+
+let myFruit = treeFruits[2];
+//console.log(myFruit);
+let yourFruit = treeFruits.at(2);
+//console.log(yourFruit);
+let hisFruit = treeFruits.at([-1]);
+//console.log(hisFruit);
+
+//console.log(treeFruitsStr1 = treeFruits.toString());
+//console.log(treeFruitsStr1 = treeFruits.join('*'))
+
+//Shift - acts one the beginning of the array
+treeFruits.shift();
+// console.log(treeFruits);
+// console.log(treeFruits.length);
+
+//Unshift
+treeFruits.unshift('Lemon');
+// console.log(treeFruits);
+// console.log(treeFruits.length);
+
+// Concat : creates new arry from two or more arrys
+const children = ['Joseph', 'Bethany', 'Zackary'];
+const adults = ['Amy', 'Andrea', 'Ingrid']
+const myParents = ['Errol', 'Frances']
+const myRelatives = children.join(adults, myParents);
+console.log(myRelatives);
+console.log(children);
+console.log(adults);
+
+const myKin = myRelatives.concat('Eric');
+console.log(myKin);
+
+const testScores = [[99,100], [86, 92], [77,79]]
+console.log(testScores);
+
+const newTestScores = testScores.flat();
+console.log(newTestScores);
