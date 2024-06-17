@@ -346,7 +346,6 @@ function blockScopeExample(risk) {
 // blockScopeExample(1);
 
 //* Notes 6/12/2024
-
 //? Named fuction
 // function calculateTip(preTip, tipPercent) {
 //   const tipResult = preTip * tipPercent;
@@ -566,15 +565,17 @@ const children = ['Joseph', 'Bethany', 'Zackary'];
 const adults = ['Amy', 'Andrea', 'Ingrid']
 const myParents = ['Errol', 'Frances']
 const myRelatives = children.join(adults, myParents);
-console.log(myRelatives);
-console.log(children);
-console.log(adults);
+// console.log(myRelatives);
+// console.log(children);
+// console.log(adults);
 
 const myKin = myRelatives.concat('Eric');
-console.log(myKin);
+// console.log(myKin);
 
 const testScores = [[99,100], [86, 92], [77,79]]
-console.log(testScores);
+// console.log(testScores);
 
 const newTestScores = testScores.flat();
-console.log(newTestScores);
+// console.log(newTestScores);
+
+//* Notes 6/17/24
