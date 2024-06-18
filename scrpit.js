@@ -579,3 +579,160 @@ const newTestScores = testScores.flat();
 // console.log(newTestScores);
 
 //* Notes 6/17/24
+// Arry mutated methods vs. unmutaded methods
+const pantsArr = ['Haggar', 'Levis', 'Docker','UnionBay']
+// console.log(pantsArr);
+pantsArr.pop(); // UnionBay
+// console.log(pantsArr)
+pantsArr.push('Lee');
+// console.log(pantsArr)
+pantsArr.shift(); // Haggar
+// console.log(pantsArr);
+pantsArr.unshift('Sonoma');
+// console.log(pantsArr);
+
+//? Array.splice(str, del, element1, element2 ...)
+const hatsArr = ['Baseball', 'Bucket', 'Boonie', 'Straw', 'Boater', 'Beret']
+// console.log(hatsArr);
+
+hatsArr.splice(2,1)
+// console.log(hatsArr);
+
+hatsArr.splice(3,0,'Fedora');
+// console.log(hatsArr);
+
+hatsArr.splice(1,2, 'Beanie', 'Cloche');
+// console.log(hatsArr);
+
+hatsArr.splice(2); // Removed all elements after 2
+// console.log(hatsArr);
+
+//? Array.reverse()
+const prime = [2,3,5,7,9]
+
+prime.reverse(); // reversed array order
+// console.log(prime);
+
+//const str = ['Code', 'Function', 'Web3'];
+// console.log(str.indexOf('Function')); // Index of specfic elements : case sensative
+// console.log(str.indexOf('Hello'))
+
+//? Array.find(element, index, array)
+//const numbers = [4,9,16,25,36]
+//const first = numbers.find((value) => {return value > 18 });
+// console.log(first);
+
+function isPrime(el) {
+  let start = 2;
+  while( start <= Math.sqrt(el)) {
+    if (el % start++ < 1) {
+      return false;
+    }
+  }
+  return el > 1;
+}
+// console.log([4,6,8,12,16,18].find(isPrime));
+// console.log([4,6,8,11,13,17,18].find(isPrime));
+
+//? Array.filter()
+const str = ['Functional', 'Hello', 'Startup', 'Web']
+
+const longWords = str.filter(word => word.length > 6); // New arr of word with a length is > 6 char.
+// console.log(longWords);
+
+//! JSON.stringify
+
+//? Array.map()
+// const number = [2,3,4,5]
+//const sqr = number.map( x => x * x);
+// console.log(sqr);
+
+//? Array.slice()
+const petsArr = ['cat', 'dog', 'bird', 'fish', 'rabbit'];
+// console.log(petsArr);
+
+const petsArr2 = petsArr.slice(2,4);
+// console.log(petsArr2);
+
+// console.log(petsArr.slice(1));
+// console.log(petsArr.slice());
+
+// Array.reduce()
+const numbers = [1,2,3,4];
+const reduceSum = numbers.reduce(function(accumlator, currentValue) {
+  return accumlator + currentValue;
+},0);
+
+// console.log(reduceSum);
+
+//? String.indexOf()
+// console.log('One Two Three'.indexOf('ee')); // Idex of the begging
+// console.log('One Two Three'.indexOf('d')); // -1; doens't exist
+
+//? String.trim() : removes white space and str and end
+// console.log('   Okay    \n    '.trim());
+// console.log('   hello   dear    \n    '.trim());
+
+//! Math
+//? Math.round() - round to the nearest int
+// console.log(Math.round(4.8653)); // 5
+// console.log(Math.round(6.2653)); // 6
+// console.log(Math.round(5.5)); // 6
+
+//? Math.ceil() : next highest int
+// console.log(Math.ceil(6.2653)); // 7
+
+//? Math.floor() : next lowest 
+// console.log(Math.floor(4.8653)); // 4
+// console.log(Math.floor(5.5)); // 5
+
+//? Math.max()
+// console.log(Math.max(4,8,-2,16,9)); // 9
+
+//? Math.min()
+// console.log(Math.min(4,8,-2,16,9)); //-2
+
+//? Math.random()
+// console.log(Math.random()); // dec between 0 and 1
+// console.log(Math.random() * 10);
+// console.log(Math.floor(Math.random()*10) + 1); // 1 - 10
+// console.log(Math.ceil(Math.random()*10)); // 1 - 10
+// console.log(Math.floor(Math.random()*11) + 1); // 1 - 11
+
+// console.log(Math.floor(Math.random() * (max - min + 1) + min));
+
+//? Call Stack
+function greet(who) {
+  console.log(`Hello, ${who}!`);
+}
+
+greet('Harry');
+console.log('Bye');
+
+//Optioinal args
+function square3(num) {
+  return num * num;
+}
+
+// console.log(square3(5,68,true, 'Beth'));
+
+function minus(a,b) {
+  if (b === undefined) return -a;
+  else return a - b;
+}
+// console.log(minus(10));
+// console.log(minus(10,5));
+
+function  roundto(num, step = 1) {
+  let remainder = num % step;
+  return num - remainder + (remainder < step / 2 ? 0 : step)
+}
+
+console.log(roundto(4,2));
+console.log(roundto(5,2));
+console.log(roundto(6,2));
+console.log(roundto(4,3));
+
+console.log(roundto(4));
+console.log(roundto(5));
+console.log(roundto(6));
