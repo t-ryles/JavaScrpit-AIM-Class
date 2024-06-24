@@ -723,7 +723,7 @@ function minus(a,b) {
 // console.log(minus(10));
 // console.log(minus(10,5));
 
-function  roundto(num, step = 1) {
+function roundto(num, step = 1) {
   let remainder = num % step;
   return num - remainder + (remainder < step / 2 ? 0 : step)
 }
