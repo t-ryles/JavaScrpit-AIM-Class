@@ -43,10 +43,21 @@ console.log(arrSum(arr));
 
 // Using a closure, write a function called maxPlusMin that does the following:
 // Takes an array of integers
-// Finds the maximum and minimum values from the array  
-// Adds the maximum and minimum values together
-// Multiplies the sum of the maximum and minimum by a value to be provided from outside the function
-// Test the function using the following information:
+function maxPlusMin(ary) {
+  // Finds the maximum and minimum values from the array  
+  let aryMax = Math.max(...ary);
+  let aryMin = Math.min(...ary);
 
-// const numbers = [5, 2, 6, 9, 7];
-// console.log(maxPlusMinMultiplied(2));  // should be 22
+  // Adds the maximum and minimum values together
+  let maxPlusMin = aryMax + aryMin;
+
+ // Multiplies the sum of the maximum and minimum by a value to be provided from outside the function
+  return function maxPlusMinMultiplied(multiply) {
+    return maxPlusMin * multiply;
+  }
+
+}
+// Test the function using the following information:
+const numbers = [5, 2, 6, 9, 7];
+const maxPlusMinMultiplied = maxPlusMin(numbers);
+console.log(maxPlusMinMultiplied(2));  // should be 22
