@@ -130,3 +130,6 @@ class SecretiveObject {
     
   }
 }
+
+//? Notes 7/03/2024
+// Classes
