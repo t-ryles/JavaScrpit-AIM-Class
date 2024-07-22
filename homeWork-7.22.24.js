@@ -92,19 +92,59 @@ class Orc extends Enemy {
 // Write a JavaScript function that takes a number as a parameter and throws a custom Error if the number is not an integer.
 function isANumber(input) {
   try {
-    typeof input == "number" 
-    console.log(input);
-    
+    if ( typeof input !== "number" || !Number.isInteger(input) ) {
+      throw new Error(`${input} is not a number.`)
+    }
+      console.log(input);
     } catch (err) {
-      console.log("Error: ", err);
+      console.log("Error: ", err.message);
   } finally {
     console.log('Finish running function.');
   }
 }
-let f;
-isANumber(f);
+isANumber("f");
+isANumber('3');
+isANumber(3);
 
 // Write a JavaScript function that uses a try…catch block to catch and handle a Range Error when accessing an array with an invalid index.
+function accessIndex(arr, index) {
+  try{
+    if ( index < 0 || index >= arr.length ) {
+      throw new RangeError(`${index} is out of bounce for the array.`);
+    }
+    console.log(`Element at index ${index} is ${arr[index]}.`);
+  } catch(err) {
+    console.log(`RangeError: ${err.message}`);
+  }
+}
 
+let arr = [1,3,4,6,7,8];
+
+accessIndex(arr, 4);
+accessIndex(arr, 0);
+accessIndex(arr, 10);
+accessIndex(arr, -1);
 
 // Write a JavaScript function that executes some code after an error occurs (can be any type of error, as long as it is one that stops execution of the script).
+function afterError(arr, index) {
+  try{
+    if ( index < 0 || index >= arr.length ) {
+      throw new RangeError(`${index} is out of bounce for the array.`);
+    }
+    console.log(`Element at index ${index} is ${arr[index]}.`);
+  } catch(err) {
+    console.log(`RangeError: ${err.message}`);
+    printArray(arr);
+  }
+}
+
+function printArray(arr) {
+  for (i in arr) {
+    console.log(`Index ${i} is ${arr[i]}.`);
+  }
+}
+
+afterError(arr, 4);
+afterError(arr, -1);
+
+
