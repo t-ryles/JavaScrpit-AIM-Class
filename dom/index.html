@@ -2,6 +2,23 @@
 
 <head>
   <title>So Many Kale Recipies</title>
+
+  <style>
+    .nav-heading {
+      font-size: 48px;
+      color: navy;
+      border: 1px dashed forestgreen;
+    }
+
+    button {
+      background-color: forestgreen;
+      color: white;
+      font-weight: bold;
+      border: 5px black;
+      margin: 5 0;
+    }
+
+  </style>
 </head>
 
 <body>
@@ -13,6 +30,7 @@
     <p>
       Do you love to cook with <a href="#">kale</a>?
     </p>
+    <img id="kale-image" src="./marty-harrington-UOVXWFNaZAo-unsplash.jpg" alt="image of kale" width="240">
     <div id="div1">
       This, of course, is DIV 1.
     </div>
@@ -20,6 +38,17 @@
       Yeah, well <em>this</em> is DIV 2!
     </div>
     <div id="div3">Ignore those dudes, Welcome to DIV 3!</div>
+
+    <button id="myButton" type="button">Click to add text</button>
+    <div id="myDiv"></div>
+
+    <button id="myButton2" type="button">Click to add more text</button>
+
+    <div id="keyRequest">Type a key: </div>
+    <input type="text" id="keyInput">
+    <div id="keyResponse">Here is the code of the pressed key: </div>
+    <div id="keyOutput"></div>
+
   </main>
 
   <script src="script.js"></script>
