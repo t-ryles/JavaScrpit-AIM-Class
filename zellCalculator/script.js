@@ -13,13 +13,10 @@ const calculate = (n1, operator, n2) => {
   return result;
 }
 
-
-
 // Adding eventListener
 keys.addEventListener('click', e => {
   // target = whatever we clicked on
   if (e.target.matches('button')) {
-    console.log('number key!');
     const key = e.target;
     const action = key.dataset.action;
     const keyContent = key.textContent;
@@ -27,6 +24,7 @@ keys.addEventListener('click', e => {
     const previousKeyType = calculator.dataset.previousKeyType;
 
     if (!action ) {
+      console.log('number key!')
       if ( displayedNum === '0' || previousKeyType === 'operator') {
         display.textContent = keyContent;
       } else {
@@ -41,6 +39,7 @@ keys.addEventListener('click', e => {
          action == 'divide' ||
          action == 'multiply'
     ) {
+      console.log('operator key!')
       const firstValue = calculator.dataset.firstValue;
       const operator = calculator.dataset.operator;
       const secondValue = displayedNum;
@@ -61,12 +60,10 @@ keys.addEventListener('click', e => {
     if ( action === 'decimal') {
       if (!displayedNum.includes('.')) {
         display.textContent = displayedNum + '.';
-      } 
-      
-      if (previousKeyType === 'operator') {
+      } else if (previousKeyType === 'operator') {
         display.textContent = '0.';
       }
-      calculator.dataset.previousKeyType = 'decimal';
+      culator.dataset.previousKeyType = 'decimal';
     }
 
     if ( action === 'clear') {
