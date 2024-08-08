@@ -27,15 +27,20 @@ keys.addEventListener('click', e => {
         .forEach(k => k.classList.remove('is-depressed'));
 
     if (!action ) {
-      console.log('number key!')
+      //console.log('number key!')
       if ( 
         displayedNum === '0' || 
-        previousKeyType === 'operator' || 
-        previousKeyType === "decimal"
+        previousKeyType === 'operator' ||
+        previousKeyType === 'calulate'
       ) {
-        display.textContent = keyContent;
-      } else {
-        display.textContent = displayedNum + keyContent;
+          display.textContent = keyContent;
+        } else {
+          display.textContent = keyContent;  
+      }
+      
+      if (previousKeyType === 'calculate') {
+        delete calculator.dataset.firstValue;
+        delete calculator.dataset.operator;
       }
       calculator.dataset.previousKeyType = 'number';
     }
