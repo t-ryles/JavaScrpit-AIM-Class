@@ -23,9 +23,16 @@ keys.addEventListener('click', e => {
     const displayedNum = display.textContent;
     const previousKeyType = calculator.dataset.previousKeyType;
 
+    Array.from(key.parentNode.children)
+        .forEach(k => k.classList.remove('is-depressed'));
+
     if (!action ) {
       console.log('number key!')
-      if ( displayedNum === '0' || previousKeyType === 'operator') {
+      if ( 
+        displayedNum === '0' || 
+        previousKeyType === 'operator' || 
+        previousKeyType === "decimal"
+      ) {
         display.textContent = keyContent;
       } else {
         display.textContent = displayedNum + keyContent;
@@ -60,10 +67,13 @@ keys.addEventListener('click', e => {
     if ( action === 'decimal') {
       if (!displayedNum.includes('.')) {
         display.textContent = displayedNum + '.';
-      } else if (previousKeyType === 'operator') {
+      }
+       if (
+        previousKeyType === 'operator' || 
+        previousKeyType === 'calculate') {
         display.textContent = '0.';
       }
-      culator.dataset.previousKeyType = 'decimal';
+      calculator.dataset.previousKeyType = 'decimal';
     }
 
     if ( action === 'clear') {
@@ -73,17 +83,19 @@ keys.addEventListener('click', e => {
 
     if ( action === 'calculate') {
         console.log('equal key!');
-        const firstValue = calculator.dataset.firstValue;
-        const operator = calculator.dataset.operator;
-        const secondValue = displayedNum;
+        let firstValue = calculator.dataset.firstValue;
+        let operator = calculator.dataset.operator;
+        let secondValue = displayedNum;
 
         if (firstValue) {
+          if (previousKeyType === 'calculate') {
+            firstValue = displayedNum;
+            secondValue = calculator.dataset.modValue;
+          }
           display.textContent = calculate(firstValue, operator, secondValue);
         }
+        calculator.dateset.modValue = secondValue;
         calculator.dataset.previousKeyType = 'calculate';
     }
-
-    Array.from(key.parentNode.children)
-        .forEach(k => k.classList.remove('is-depressed'))
   }
 })
