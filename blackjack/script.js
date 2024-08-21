@@ -29,3 +29,5 @@ function buildDeck() {
   }
   console.log(deck);
 }
+
+// JS sleep or sweep fuctions
