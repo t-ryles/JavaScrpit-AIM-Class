@@ -3,6 +3,12 @@ body {
   text-align: center;
 }
 
+#playersBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 #dealer-cards img {
   height: 175px;
   width: 125px;
@@ -11,7 +17,7 @@ body {
   box-shadow: 3px 4px 8px #3d3d41;
 }
 
-#player-cards img {
+.card-img {
   height: 175px;
   width: 125px;
   margin: 4px;

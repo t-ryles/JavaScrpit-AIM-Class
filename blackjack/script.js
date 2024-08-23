@@ -23,6 +23,9 @@ window.onload = function() {
   for (let i = 0; i < numOfPlayers; i++) {
     players.push([]);
   }
+
+  console.log( players);
+  
   
   buildPlayers(numOfPlayers);
   dealCards(2);
@@ -78,19 +81,19 @@ function startGame() {
   }
   console.log(`Dealer sum : ${dealerSum}`);
   
-  // Player cards
-  for ( let i = 0; i < 2; i++ ) {
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = `./cards/${card}.png`
-    // Adding to dealer sum
-    playerSum += getValue(card);
-    // Adding to ace count
-    playerAceCount += checkAce(card);
-    // Adding card to display
-    document.getElementById("player-cards").append(cardImg);
-  }
-  console.log(`Player sum : ${playerSum}`);
+  // // Player cards
+  // for ( let i = 0; i < 2; i++ ) {
+  //   let cardImg = document.createElement("img");
+  //   let card = deck.pop();
+  //   cardImg.src = `./cards/${card}.png`
+  //   // Adding to dealer sum
+  //   playerSum += getValue(card);
+  //   // Adding to ace count
+  //   playerAceCount += checkAce(card);
+  //   // Adding card to display
+  //   document.getElementById("player-cards").append(cardImg);
+  // }
+  // console.log(`Player sum : ${playerSum}`);
 
   // Functionality to hit and stay button
   document.getElementById('hit').addEventListener("click", hit);
@@ -114,6 +117,7 @@ function hit() {
     canHit = false;
   }
 }
+
 
 function stay(){
   dealerSum = reduceAce(dealerSum, dealerAceCount);
@@ -146,17 +150,32 @@ function stay(){
   document.getElementById('results').innerHTML = message;
 }
 
-function getValue(card) {
-  let data = card.split("-");
-  let value = data[0];
 
-  if (isNaN(value)) { // Checing for A, J, Q, K
-    if (value == "A") {
-      return 11;
+function getValue(players) {
+  for (let i = 0; i < players.length; i++) {
+
+    let total = 0;
+
+    for (let j = 0; j < players[i].length; j++) {
+      let data = players[j].split("-");
+      console.log(`Data: ${data}`);
+      
+      let value = data[0];
+
+      if (isNaN(value)) { // Checking for A
+        if (value == "A") {
+          total += 11;
+        } else { // J, Q, K
+          total += 10;
+        }
+      } else {
+        // Return int of value
+        total += parseInt(value);
+      }
     }
-    return 10;
+    console.log(`Player ${players[i]} total: ` + total);
+    return total;
   }
-  return parseInt(value); // Return int of value
 }
 
 function checkAce(card) {
@@ -176,24 +195,32 @@ function reduceAce(playerSum, playerAceCount) {
 
 // Deals cards to players from top of deck
 function dealCards(numderOfCards) {
+  let sum = 0;
+
   for ( let cards = 0; cards < numderOfCards; cards++) {
     for ( let i = 0; i < players.length; i++) {
       let card = deck.shift();
       players[i].push(card);
 
-      console.log(card);
-      
+      console.log(`dealCards card: ` + card);
 
+      // Get player span ID
+      let playerSumSpan = document.getElementById(`player-${i+1}-sum`);
+      
+      sum = getValue(card);
+      // Setting player card sum
+      playerSumSpan.innerHTML = sum;
       // Displaying cards
       let cardImg = document.createElement("img");
+      // Adding card CSS class
+      cardImg.setAttribute("class", `card-img`);
       //let card = deck.pop();
       cardImg.src = `./cards/${card}.png`
-      // Adding to dealer sum
-      playerSum += getValue(card);
       // Adding to ace count
       playerAceCount += checkAce(card);
       // Adding card to display
-      document.getElementById(`player-${i}-cards`).append(cardImg);
+      document.getElementById(`player-${i+1}-cards`).append(cardImg);
+      //console.log(sum);
     }
   }
   console.log(players);
