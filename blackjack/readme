@@ -1,0 +1,19 @@
+Blackjack game Requirements 
+
+	1. 	Dealing in correct order - Completed
+	2.	.5 to 1 second delay in dealing each card to see order if dealing is correct Completed 
+	3.	Seven decks - Completed
+	4.	Reshuffle when 60-75 cards left -
+	5.	One, two or three players plus dealer - Completed
+	6.	Betting
+	7.	Splitting
+	8.	Doubling down
+	9.	Dealer getting soft 17
+
+Extras (optional)
+	1.	Animate dealing and flipping of cards
+	2.	Animate shuffling of cards
+	3.	Adding sound effects
+	4.	Different looking deck of cards
+	5.	Choice of differently looking decks of cards to choose from (in f we can find some)
+	6.	Demo of game play to go along with rules

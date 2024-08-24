@@ -16,34 +16,35 @@ let deck;
 let canHit = true;
 
 window.onload = function() {
-  buildDeck();
+  buildDeck(7);
   shuffleDeck();
-  let numOfPlayers = prompt("Please enter the number of players: ");
+  
+  let numOfPlayers = parseInt(prompt("Please enter the number of players: "));
   for (let i = 0; i < numOfPlayers; i++) {
     players.push([]);
   }
-
-  console.log( players);
   
   buildPlayers(numOfPlayers);
   dealCards(2);
-  //startGame();
-  console.log(deck);
-
+  dealersHand();
+  newHand();
 }
 
-function buildDeck() {
+function buildDeck(numofDeck) {
   let values = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
   let suites = ["C", "D", "H", "S"];
-
   deck = [];
 
-
-  for (let s = 0; s < suites.length; s++) {
-    for (let v = 0; v < values.length; v++ ) {
-      deck.push(values[v] + "-" + suites[s]);
+  for (let i = 0 ; i < numofDeck; i++) {
+    let subDeck = []
+    
+    for (let s = 0; s < suites.length; s++) {
+      for (let v = 0; v < values.length; v++ ) {
+        subDeck.push(values[v] + "-" + suites[s]);
+      }
     }
-  }
+    deck = deck.concat(subDeck);
+  }  
 }
 
 function shuffleDeck() {
@@ -54,21 +55,17 @@ function shuffleDeck() {
     deck[i] = deck[j];
     deck[j] = temp;
   }
-  console.log(deck);
 }
 
-function startGame() {
-  hidden = deck.pop();
+function dealersHand() {
+  hidden = deck.shift();
   dealerSum += getValue(hidden);
   dealerAceCount += checkAce(hidden);
-
-  //console.log(hidden);
-  //console.log(dealerSum);
 
   while (dealerSum < 17) {
     // Dealer cards
     let cardImg = document.createElement("img");
-    let card = deck.pop();
+    let card = deck.shift();
     cardImg.src = `./cards/${card}.png`
     // Adding to dealer sum
     dealerSum += getValue(card);
@@ -78,25 +75,26 @@ function startGame() {
     document.getElementById("dealer-cards").append(cardImg);
   }
   console.log(`Dealer sum : ${dealerSum}`);
-  
-  // // Player cards
-  // for ( let i = 0; i < 2; i++ ) {
-  //   let cardImg = document.createElement("img");
-  //   let card = deck.pop();
-  //   cardImg.src = `./cards/${card}.png`
-  //   // Adding to dealer sum
-  //   playerSum += getValue(card);
-  //   // Adding to ace count
-  //   playerAceCount += checkAce(card);
-  //   // Adding card to display
-  //   document.getElementById("player-cards").append(cardImg);
-  // }
-  // console.log(`Player sum : ${playerSum}`);
 
   // Functionality to hit and stay button
   document.getElementById('hit').addEventListener("click", hit);
   document.getElementById('stay').addEventListener("click", stay);
 
+}
+
+function checkAce(card) {
+  if (card[0] == "A"){
+    return 1;
+  }
+  return 0;
+}
+
+function reduceAce(playerSum, playerAceCount) {
+  while ( playerSum > 21 && playerAceCount > 0 ) {
+    playerSum -= 10;
+    playerAceCount -= 1;
+  }
+  return playerSum;
 }
 
 function hit() {
@@ -144,89 +142,60 @@ function stay(){
 
   document.getElementById('dealer-sum').innerHTML = dealerSum;
   document.getElementById('player-sum').innerHTML = playerSum;
-  //console.log(`Player sum : ${playerSum}`);
   document.getElementById('results').innerHTML = message;
 }
 
-for (let i = 0 ; i < players.length; i++) {
-  //console.log(players[i]);
-  getValue(players[i]);
-}
-
-function getValue() {
-
-  for (let i = 0; i < players.length; i++) {
+function getValue(card){
     let total = 0;
+    let data = card.split("-");
+    let value = data[0];
 
-    for (let j = 0; j < players[i].length; j++) {
-      let data = players[i][j].split("-");
-      let value = data[0];
-
-      if (isNaN(value)) { // Checking for A, J, Q, K
-        if (value == "A") {
-          total += 11;
-        } else {
-          total += 10;
-        }
-      } else {
-        total += parseInt(value); // Return int of value
-      }
-    //console.log(total);
+  if (isNaN(value)) { // Checking for A, J, Q, K
+    if (value === "A") {
+      total += 11;
+    } else {
+      total += 10;
     }
+  } else {
+    total += parseInt(value); // Return int of value
   }
-  //return total;
-}
-
-function checkAce(card) {
-  if (card[0] == "A"){
-    return 1;
-  }
-  return 0;
-}
-
-function reduceAce(playerSum, playerAceCount) {
-  while ( playerSum > 21 && playerAceCount > 0 ) {
-    playerSum -= 10;
-    playerAceCount -= 1;
-  }
-  return playerSum;
+  return total;
 }
 
 // Deals cards to players from top of deck
 function dealCards(numderOfCards) {
-  let sum = 0;
+  for ( let i = 0; i < players.length; i++) {
+    // Get player span ID
+    let playerSumSpan = document.getElementById(`player-${i+1}-sum`);
 
-  for ( let cards = 0; cards < numderOfCards; cards++) {
-    for ( let i = 0; i < players.length; i++) {
-      let card = deck.shift();
-      players[i].push(card);
+    (function dealToPlayer(i, delay) {
+      for ( let cards = 0; cards < numderOfCards; cards++) {
+        setTimeout(() => {
+          let card = deck.shift();
+          players[i].push(card);
 
-      console.log(`dealCards card: ` + card);
-
-      // Get player span ID
-      let playerSumSpan = document.getElementById(`player-${i+1}-sum`);
-      
-      sum += getValue(card);
+          let playerTotal = 0;
+          for (let j = 0; j < players[i].length; j++) {
+          playerTotal += getValue(players[i][j])
+      }
       // Setting player card sum
-      playerSumSpan.innerHTML = sum;
-      //console.log(`Player sum: ` + sum);
-      // Displaying cards
+      playerSumSpan.innerHTML = playerTotal;
+
       let cardImg = document.createElement("img");
       // Adding card CSS class
       cardImg.setAttribute("class", `card-img`);
-      //let card = deck.pop();
       cardImg.src = `./cards/${card}.png`
       // Adding to ace count
       playerAceCount += checkAce(card);
       // Adding card to display
       document.getElementById(`player-${i+1}-cards`).append(cardImg);
-      //console.log(sum);
+    }, cards * delay);
+    }
+  })(i, 1000);
     }
   }
-  console.log(players);
-}
 
-// Adding players to game
+// Adding players to HTML
 function buildPlayers(numOfPlayers) {
   for (let i = 0; i < numOfPlayers; i++) {
     // Getting Div for players 
@@ -267,6 +236,16 @@ function buildPlayers(numOfPlayers) {
 
     // Append playerDiv to playersBox
     playersBox.appendChild(playerDiv);
+  }
+}
+
+function newHand(players) {
+  let usedCard = [];
+
+  for ( let i = 0; i < players.length; i++) {
+    for ( let j = 0; j < players[i].length; j++) {
+      usedCard.push(players[i][j].pop());
+    }
   }
 }
 
