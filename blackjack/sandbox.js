@@ -51,4 +51,58 @@ function getValue(players) {
   }
 }
 
-getValue(players); // Should print totals for each player's hand
+function getValue2(players) {
+  for (let i = 0; i < players.length; i++) {
+    let total = 0;
+
+    for (let j = 0; j < players[i].length; j++) {
+      let data = players[i][j].split("-");      
+      let value = data[0];
+      console.log(`Value: ${value}`);
+
+      if (isNaN(value)) { // Checking for A
+        if (value == "A") {
+          total += 11;
+        } else { // J, Q, K
+          total += 10;
+        }
+      } else {
+        // Return int of value
+        total += parseInt(value);
+      }
+    }
+    //console.log(`Player ${i + 1} total: ` + total);
+    console.log(`getValue2 Player ${i + 1} total: ` + total);
+    //return total;
+  }
+}
+
+for (let i = 0 ; i < players.length; i++) {
+  console.log(players[i]);
+  
+  console.log(getValue3(players[i]))
+}
+
+function getValue3(hand) {
+  let total = 0;
+
+  for (let i = 0; i < hand.length; i++) {
+    let data = hand[i].split("-");
+    let value = data[0];
+
+    if (isNaN(value)) { // Checking for A, J, Q, K
+      if (value == "A") {
+        total += 11;
+      } else {
+        total += 10;
+      }
+    } else {
+      total += parseInt(value); // Convert value to integer and add to total
+    }
+  }
+  return total;
+}
+
+//getValue(players); // Should print totals for each player's hand
+//getValue2(players)
+getValue3(players); 

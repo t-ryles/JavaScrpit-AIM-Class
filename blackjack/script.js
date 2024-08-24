@@ -19,13 +19,11 @@ window.onload = function() {
   buildDeck();
   shuffleDeck();
   let numOfPlayers = prompt("Please enter the number of players: ");
-
   for (let i = 0; i < numOfPlayers; i++) {
     players.push([]);
   }
 
   console.log( players);
-  
   
   buildPlayers(numOfPlayers);
   dealCards(2);
@@ -150,32 +148,33 @@ function stay(){
   document.getElementById('results').innerHTML = message;
 }
 
+for (let i = 0 ; i < players.length; i++) {
+  //console.log(players[i]);
+  getValue(players[i]);
+}
 
-function getValue(players) {
+function getValue() {
+
   for (let i = 0; i < players.length; i++) {
-
     let total = 0;
 
     for (let j = 0; j < players[i].length; j++) {
-      let data = players[j].split("-");
-      console.log(`Data: ${data}`);
-      
+      let data = players[i][j].split("-");
       let value = data[0];
 
-      if (isNaN(value)) { // Checking for A
+      if (isNaN(value)) { // Checking for A, J, Q, K
         if (value == "A") {
           total += 11;
-        } else { // J, Q, K
+        } else {
           total += 10;
         }
       } else {
-        // Return int of value
-        total += parseInt(value);
+        total += parseInt(value); // Return int of value
       }
+    //console.log(total);
     }
-    console.log(`Player ${players[i]} total: ` + total);
-    return total;
   }
+  //return total;
 }
 
 function checkAce(card) {
@@ -207,9 +206,10 @@ function dealCards(numderOfCards) {
       // Get player span ID
       let playerSumSpan = document.getElementById(`player-${i+1}-sum`);
       
-      sum = getValue(card);
+      sum += getValue(card);
       // Setting player card sum
       playerSumSpan.innerHTML = sum;
+      //console.log(`Player sum: ` + sum);
       // Displaying cards
       let cardImg = document.createElement("img");
       // Adding card CSS class
