@@ -1,9 +1,11 @@
 // Point value of dealer and player
 let dealerSum = 0;
-let playerSum = 0;
+//let playerSum = 0;
 
 // Fake player count
-let players = []; 
+let players = [];
+let usedCard = [];
+
 
 // Dealer and player  ace count
 let dealerAceCount = 0;
@@ -16,6 +18,7 @@ let deck;
 let canHit = true;
 
 window.onload = function() {
+  startGame();
   buildDeck(7);
   shuffleDeck();
   
@@ -27,7 +30,13 @@ window.onload = function() {
   buildPlayers(numOfPlayers);
   dealCards(2);
   dealersHand();
-  newHand();
+}
+
+function startGame() {
+    // Functionality to hit and stay button
+    document.getElementById('hit').addEventListener("click", hit);
+    document.getElementById('stay').addEventListener("click", stay);
+    document.getElementById('newHand').addEventListener("click", newHand);
 }
 
 function buildDeck(numofDeck) {
@@ -75,11 +84,6 @@ function dealersHand() {
     document.getElementById("dealer-cards").append(cardImg);
   }
   console.log(`Dealer sum : ${dealerSum}`);
-
-  // Functionality to hit and stay button
-  document.getElementById('hit').addEventListener("click", hit);
-  document.getElementById('stay').addEventListener("click", stay);
-
 }
 
 function checkAce(card) {
@@ -113,7 +117,6 @@ function hit() {
     canHit = false;
   }
 }
-
 
 function stay(){
   dealerSum = reduceAce(dealerSum, dealerAceCount);
@@ -200,52 +203,65 @@ function buildPlayers(numOfPlayers) {
   for (let i = 0; i < numOfPlayers; i++) {
     // Getting Div for players 
     let playersBox = document.getElementById('playersBox');
-
     // Building a player's div
     let playerDiv = document.createElement("div");
-
     // Setting id to player DIV
     playerDiv.setAttribute("id", `player-${i+1}-div`);
-
     // Building H2 for player DIV
     let playerH2 = document.createElement("h2");
-
     // Setting H2 ID
     playerH2.setAttribute("id", `player-${i+1}-h2`);
-
     // Appending h2 to the playerDiv
     playerDiv.appendChild(playerH2);
-
     // Build span for H2
     let playerSpan = document.createElement("span");
-
     // Setting ID for player span
     playerSpan.setAttribute('id', `player-${i+1}-sum`);
-
     // Append span to H2
     playerH2.appendChild(playerSpan);
-
     // Building Div for cards
     let playerCardDiv = document.createElement("div");
-
     // Setting id to player card DIV
     playerCardDiv.setAttribute("id", `player-${i+1}-cards`);
-
     // Append playerCardDiv to playerDiv
     playerDiv.appendChild(playerCardDiv);
-
     // Append playerDiv to playersBox
     playersBox.appendChild(playerDiv);
   }
 }
-
-function newHand(players) {
-  let usedCard = [];
-
+// Dealing a new hand without restarting the game
+function newHand() {
   for ( let i = 0; i < players.length; i++) {
-    for ( let j = 0; j < players[i].length; j++) {
-      usedCard.push(players[i][j].pop());
+    for ( let j = 2; j > 0; j--) {
+      usedCard.push(players[i].pop());
     }
+    console.log(players);
+  }
+  console.log(`Ouside for loop` + players);
+  console.log(usedCard);
+  console.log(deck);
+  clearCardImgs();
+  dealersHand();
+  dealCards(2);
+  checkDeck();
+}
+
+function clearCardImgs() {
+  for (let i = 0; i < players.length; i++) {
+    const playerImg = document.getElementById(`player-${i+1}-cards`);
+    let image = playerImg.querySelector('img');
+  
+    while (image) {
+      playerImg.removeChild(image)
+      image = playerImg.querySelector('img');
+    }
+  }
+}
+
+function checkDeck() {
+  if (deck.length < 65) {
+    buildDeck(7);
+    shuffleDeck();
   }
 }
 
