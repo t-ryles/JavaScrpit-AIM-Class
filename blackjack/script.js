@@ -1,42 +1,46 @@
-// Point value of dealer and player
-let dealerSum = 0;
-//let playerSum = 0;
-
-// Fake player count
-let players = [];
-let usedCard = [];
-
-
-// Dealer and player  ace count
-let dealerAceCount = 0;
+// Dealer and player ace count
 let playerAceCount = 0;
+
+//Point value of dealer and player
+let dealerSum = 0;
+let dealerAceCount = 0;
+let dealerHand = [];
+
+// Player count
+let players = [];
+
+// Used card deck
+let usedCard = [];
 
 let hidden;
 let deck;
 
 // Allows player to draw card while playerSum <= 21
 let canHit = true;
+let allStay = false;
 
 window.onload = function() {
   startGame();
-  buildDeck(7);
   shuffleDeck();
   
-  let numOfPlayers = parseInt(prompt("Please enter the number of players: "));
+  let numOfPlayers = parseInt(prompt("Please enter the number of players (1 - 4): "));
   for (let i = 0; i < numOfPlayers; i++) {
     players.push([]);
   }
+
+  let numOfDecks = parseInt(prompt("Please enter the number of decks: "));
+  buildDeck(numOfDecks);
+  console.log(deck.length);
   
+
   buildPlayers(numOfPlayers);
-  dealCards(2);
   dealersHand();
+  dealCards();
 }
 
 function startGame() {
     // Functionality to hit and stay button
-    document.getElementById('hit').addEventListener("click", hit);
-    document.getElementById('stay').addEventListener("click", stay);
-    document.getElementById('newHand').addEventListener("click", newHand);
+    document.getElementById('newGame').addEventListener("click", newHand);
 }
 
 function buildDeck(numofDeck) {
@@ -57,7 +61,7 @@ function buildDeck(numofDeck) {
 }
 
 function shuffleDeck() {
-  for (let i = 0; i < deck.length; i++) {
+  for (let i = 0; i < deck; i++) {
     let j = Math.floor(Math.random() * deck.length);
 
     let temp = deck[i];
@@ -75,6 +79,7 @@ function dealersHand() {
     // Dealer cards
     let cardImg = document.createElement("img");
     let card = deck.shift();
+    dealerHand.push(card);
     cardImg.src = `./cards/${card}.png`
     // Adding to dealer sum
     dealerSum += getValue(card);
@@ -82,8 +87,28 @@ function dealersHand() {
     dealerAceCount += checkAce(card);
     // Adding card to display
     document.getElementById("dealer-cards").append(cardImg);
+
+    soft17();
   }
+  console.log(`Dealer hand : ${dealerHand}`);
   console.log(`Dealer sum : ${dealerSum}`);
+}
+
+function soft17(){
+  let randomNum = Math.floor(Math.random()* 10) + 1;
+
+  if (dealerSum === 17 && dealerAceCount > 1 && randomNum % 3 == 0) {
+    dealerAceCount -= 1;
+    dealerSum -= 10;
+
+    let cardImg = document.createElement("img");
+    let card = deck.shift();
+    dealerHand.push(card);
+    cardImg.src = `./cards/${card}.png`
+    dealerSum += getValue(card);
+    dealerAceCount += checkAce(card);
+    document.getElementById("dealer-cards").append(cardImg);
+  }
 }
 
 function checkAce(card) {
@@ -101,21 +126,33 @@ function reduceAce(playerSum, playerAceCount) {
   return playerSum;
 }
 
-function hit() {
-  if (!canHit) {
-    return;
-  }
+function hit(index) {
+  console.log(index);
+  console.log(players);
 
-  let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = `./cards/${card}.png`
-    playerSum += getValue(card);
-    playerAceCount += checkAce(card);
-    document.getElementById("player-cards").append(cardImg);
+      if (!canHit) {
+        return;
+      }
+    
+      let cardImg = document.createElement("img");
+      let card = deck.pop();
+      cardImg.src = `./cards/${card}.png`;
 
-  if (reduceAce(playerSum, playerAceCount) > 21 ) {
-    canHit = false;
-  }
+      console.log(players[index]);
+      
+
+      players[index].push(card);
+
+      console.log(players[index]);
+      let playerSumSpan = document.getElementById(`player-${index+1}-sum`);
+      playerSumSpan += getValue(card);
+      playerAceCount += checkAce(card);
+      cardImg.setAttribute("class", `card-img`);
+      document.getElementById(`player-${index + 1}-cards`).append(cardImg);
+    
+      if (reduceAce(playerSumSpan, playerAceCount) > 21 ) {
+        canHit = false;
+      }
 }
 
 function stay(){
@@ -166,13 +203,13 @@ function getValue(card){
 }
 
 // Deals cards to players from top of deck
-function dealCards(numderOfCards) {
+function dealCards() {
   for ( let i = 0; i < players.length; i++) {
     // Get player span ID
     let playerSumSpan = document.getElementById(`player-${i+1}-sum`);
 
     (function dealToPlayer(i, delay) {
-      for ( let cards = 0; cards < numderOfCards; cards++) {
+      for ( let cards = 0; cards < 2; cards++) {
         setTimeout(() => {
           let card = deck.shift();
           players[i].push(card);
@@ -196,7 +233,9 @@ function dealCards(numderOfCards) {
     }
   })(i, 1000);
     }
-  }
+
+    checkDeck();
+}
 
 // Adding players to HTML
 function buildPlayers(numOfPlayers) {
@@ -225,8 +264,34 @@ function buildPlayers(numOfPlayers) {
     playerCardDiv.setAttribute("id", `player-${i+1}-cards`);
     // Append playerCardDiv to playerDiv
     playerDiv.appendChild(playerCardDiv);
+
+    let playerHitBTN = document.createElement("button");
+    playerHitBTN.setAttribute("id", `player-${i+1}-hit`);
+    playerHitBTN.setAttribute("class", `button`);
+    playerHitBTN.setAttribute("class", `hit`);
+    playerHitBTN.textContent = 'Hit';
+
+    let playerStayBTN = document.createElement("button");
+    playerStayBTN.setAttribute("id", `player-${i+1}-stay`);
+    playerStayBTN.setAttribute("class", `button`);
+    playerStayBTN.setAttribute("class", `stay`);
+    playerStayBTN.textContent = 'Stay';
+
+    playerDiv.appendChild(playerHitBTN);
+    playerDiv.appendChild(playerStayBTN);
     // Append playerDiv to playersBox
     playersBox.appendChild(playerDiv);
+
+    playerHitBTN.addEventListener('click', function() {
+      let index = parseInt(`${i}`);
+      //console.log(`${i}`);
+      hit(index);
+    });
+
+    playerStayBTN.addEventListener('click', function(){
+      console.log(`player[${i}]`);
+    });
+
   }
 }
 // Dealing a new hand without restarting the game
