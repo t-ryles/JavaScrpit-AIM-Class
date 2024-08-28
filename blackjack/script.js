@@ -14,31 +14,38 @@ let usedCard = [];
 
 let hidden;
 let deck;
+let stayCount;
 
 // Allows player to draw card while playerSum <= 21
-let canHit = true;
-let allStay = false;
 
 window.onload = function() {
   startGame();
-  shuffleDeck();
   
-  let numOfPlayers = parseInt(prompt("Please enter the number of players (1 - 4): "));
+  let numOfPlayers = parseInt(prompt("Please enter the number of players  between 1 and 4: "));
+
+  while (numOfPlayers < 0 ||  numOfPlayers > 4 || isNaN(numOfPlayers)) {
+    numOfPlayers = parseInt(prompt('Invalid input. Enter a number between 1 and 4: '))
+  }
+
   for (let i = 0; i < numOfPlayers; i++) {
     players.push([]);
   }
+  stayCount = players.length;
 
-  let numOfDecks = parseInt(prompt("Please enter the number of decks: "));
-  buildDeck(numOfDecks);
-  console.log(deck.length);
+  console.log(stayCount);
   
 
+  let numOfDecks = parseInt(prompt("Please enter the number of decks: "));
+
+  buildDeck(numOfDecks);
+  shuffleDeck();
   buildPlayers(numOfPlayers);
   dealersHand();
   dealCards();
 }
 
 function startGame() {
+
     // Functionality to hit and stay button
     document.getElementById('newGame').addEventListener("click", newHand);
 }
@@ -61,7 +68,7 @@ function buildDeck(numofDeck) {
 }
 
 function shuffleDeck() {
-  for (let i = 0; i < deck; i++) {
+  for (let i = 0; i < deck.length; i++) {
     let j = Math.floor(Math.random() * deck.length);
 
     let temp = deck[i];
@@ -135,17 +142,16 @@ function hit(index) {
       }
     
       let cardImg = document.createElement("img");
-      let card = deck.pop();
+      let card = deck.shift();
       cardImg.src = `./cards/${card}.png`;
-
-      console.log(players[index]);
       
-
       players[index].push(card);
 
-      console.log(players[index]);
       let playerSumSpan = document.getElementById(`player-${index+1}-sum`);
-      playerSumSpan += getValue(card);
+      let currentValue = parseInt(playerSumSpan.textContent);
+      
+      playerSumSpan.textContent = currentValue + getValue(card);
+
       playerAceCount += checkAce(card);
       cardImg.setAttribute("class", `card-img`);
       document.getElementById(`player-${index + 1}-cards`).append(cardImg);
@@ -157,9 +163,13 @@ function hit(index) {
 
 function stay(){
   dealerSum = reduceAce(dealerSum, dealerAceCount);
-  playerSum = reduceAce(playerSum, playerAceCount);
+  let playersSpan = document.querySelectorAll('span');
+  for (let span in playersSpan) {
+    let spanValue = span.textContent;
+    let playerSum = reduceAce(spanValue, playerAceCount);
+    span.textContent = playerSum;
+  }
   //console.log(`Player sum : ${playerSum}`);
-  canHit = false;
   document.getElementById('hidden').src = `./cards/${hidden}.png`;
   let message = "";
 
@@ -279,17 +289,19 @@ function buildPlayers(numOfPlayers) {
 
     playerDiv.appendChild(playerHitBTN);
     playerDiv.appendChild(playerStayBTN);
-    // Append playerDiv to playersBox
     playersBox.appendChild(playerDiv);
 
     playerHitBTN.addEventListener('click', function() {
       let index = parseInt(`${i}`);
-      //console.log(`${i}`);
       hit(index);
     });
 
     playerStayBTN.addEventListener('click', function(){
-      console.log(`player[${i}]`);
+      stayCount--;
+
+      if (stayCount === 0) {
+        stay();
+      }
     });
 
   }

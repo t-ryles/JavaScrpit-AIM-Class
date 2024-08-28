@@ -1,4 +1,4 @@
-import { players, deck, pot } from "./sandbox";
+import { players, deck, pot } from "../blackjack/sandbox";
 
 class Dealer {
     constructor() {
