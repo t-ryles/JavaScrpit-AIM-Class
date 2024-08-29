@@ -1,4 +1,4 @@
-import { Dealer } from "../blackjack-OPP/dealer";
+import { Dealer } from "./dealer";
 import { Player } from "./player";
 
 let pot = 0;
