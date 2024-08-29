@@ -75,17 +75,19 @@ function shuffleDeck() {
 }
 
 function dealersHand() {
+  
   hidden = deck.shift();
   dealerSum += getValue(hidden);
   dealerAceCount += checkAce(hidden);
 
   while (dealerSum < 17) {
+    
     // Dealer cards
     let cardImg = document.createElement("img");
     let card = deck.shift();
-    console.log(card);
     
     dealerHand.push(card);
+
     cardImg.src = `./cards/${card}.png`
     // Adding to dealer sum
     dealerSum += getValue(card);
@@ -315,13 +317,15 @@ function buildPlayers(numOfPlayers) {
 
 // Dealing a new hand without restarting the game
 function newHand() {
-  for (let i = dealerHand.length; i > 0 ; i--) {
-    usedCard.push(dealerHand.pop());
+  dealerSum = 0;
+  while(dealerHand.length > 0) {
+    dealerHand.pop();
   }
+  hidden = null;
 
   for ( let i = 0; i < players.length; i++) {
-    for ( let j = 2; j > 0; j--) {
-      usedCard.push(players[i].pop());
+    while (players[i].length > 0) {
+      players[i].pop();
     }
   }
 }
@@ -350,7 +354,7 @@ function clearCardImgs() {
 
 function checkDeck() {
   if (deck.length < 65) {
-    deck += usedCard;
+    buildDeck(numOfDecks);
     shuffleDeck();
   }
 }
