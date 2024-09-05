@@ -75,16 +75,25 @@ function shuffleDeck() {
 }
 
 function dealersHand() {
-  
+  console.log(`Dealers sum inside dealersHand function: ` + dealerSum);
+
   hidden = deck.shift();
+  console.log(hidden);
+  
   dealerSum += getValue(hidden);
+  console.log(`Dealers sum dealersHand with hidden card: ` + dealerSum);
+
   dealerAceCount += checkAce(hidden);
 
   while (dealerSum < 17) {
+    console.log(`Dealers sum inside while loop inside dealersHand function: ` + dealerSum);
+
     
     // Dealer cards
     let cardImg = document.createElement("img");
     let card = deck.shift();
+    console.log(`Dealers card is: ` + card);
+
     
     dealerHand.push(card);
 
@@ -98,6 +107,8 @@ function dealersHand() {
     document.getElementById("dealer-cards").append(cardImg);
   }
   //soft17();
+  console.log(`Dealers sum on dealerHand function: ` + dealerSum);
+
 }
 
 function soft17(){
@@ -316,12 +327,15 @@ function buildPlayers(numOfPlayers) {
 }
 
 // Dealing a new hand without restarting the game
-function newHand() {
-  dealerSum = 0;
+function newHand() {  
+  console.log(`Dealers old hand: ` + dealerHand);
+
   while(dealerHand.length > 0) {
     dealerHand.pop();
   }
-  hidden = null;
+
+  console.log(`Dealers sum inside newHand function: ` + dealerSum);
+
 
   for ( let i = 0; i < players.length; i++) {
     while (players[i].length > 0) {
@@ -360,10 +374,14 @@ function checkDeck() {
 }
 
 function test() {
+  dealerSum = 0;
   clearCardImgs();
   newHand();
   dealersHand();
-  dealCards(2);
+  console.log(`Dealers sum on new game button click: ` + dealerSum);
+  console.log(`Dealers new hand: ` + dealerHand);
+
+  dealCards();
   checkDeck();
 }
 
