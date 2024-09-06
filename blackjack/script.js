@@ -141,10 +141,7 @@ function hit(index) {
   let playerSumSpan = document.getElementById(`player-${index+1}-sum`);
   let playerSum = playerSumSpan.innerHTML
   //console.log(playerSum);
-    
-  let playerHitBTN = document.getElementById(`player-${index+1}-hit`)
-
-  if ( playerSum < 21) {
+  
     let cardImg = document.createElement("img");
     let card = deck.shift();
     cardImg.src = `./cards/${card}.png`;
@@ -163,10 +160,7 @@ function hit(index) {
     if (reduceAce(playerSumSpan, playerAceCount) > 21 ) {
       canHit = false;
     }
-  } else {
-    playerHitBTN.setAttribute('class', 'disabled');
-    stayCount++;
-  }
+    checkPlayerSum();
 }
 
 function stay(){
@@ -255,7 +249,7 @@ function dealCards() {
     }
   })(i, 1000);
     }
-
+    checkPlayerSum();
     checkDeck();
 }
 
@@ -329,7 +323,6 @@ function buildPlayers(numOfPlayers) {
 
 // Dealing a new hand without restarting the game
 function newHand() {  
-
   // Clearing dealer hand
   while(dealerHand.length > 0) {
     dealerHand.pop();
@@ -375,6 +368,28 @@ function checkDeck() {
   if (deck.length < 65) {
     buildDeck(numOfDecks);
     shuffleDeck();
+  }
+}
+
+function checkPlayerSum(){
+  
+  for (let i = 0; i < players.length; i++) {
+    let playerHitBTN = document.getElementById(`player-${i+1}-hit`)
+    let playerSumSpan = document.getElementById(`player-${i+1}-sum`);
+    let playerSum = playerSumSpan.innerHTML;
+
+    if (playerSum > 21) {
+      playerHitBTN.setAttribute('class', 'disabled');
+      stayCount++;
+    }
+  }
+}
+
+function removeDisableClass(){ 
+  for( let i = 0; i < players.length; i++ ) {
+    let playerHitBTN = document.getElementById(`player-${i+1}-hit`)
+
+    
   }
 }
 
