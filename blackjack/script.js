@@ -31,7 +31,9 @@ window.onload = function() {
   for (let i = 0; i < numOfPlayers; i++) {
     players.push([]);
   }
-  stayCount = players.length;  
+  stayCount = players.length;
+  console.log(`Starting value for stay count is: ${stayCount}`);
+  
 
   let numOfDecks = parseInt(prompt("Please enter the number of decks: "));
 
@@ -313,6 +315,8 @@ function buildPlayers(numOfPlayers) {
 
     playerStayBTN.addEventListener('click', function(){
       stayCount--;
+      console.log(`Stay count = ${stayCount}`);
+      
 
       if (stayCount === 0) {
         stay();
@@ -379,7 +383,7 @@ function checkPlayerSum(){
     let playerSum = playerSumSpan.innerHTML;
 
     if (playerSum > 21) {
-      playerHitBTN.setAttribute('class', 'disabled');
+      playerHitBTN.classList.add('disabled');
       stayCount++;
     }
   }
@@ -388,17 +392,20 @@ function checkPlayerSum(){
 function removeDisableClass(){ 
   for ( let i = 0; i < players.length; i++ ) {
     let playerHitBTN = document.getElementById(`player-${i+1}-hit`)
-
-
+    playerHitBTN.classList.remove('disabled');
   }
 }
 
 function test() {
   dealerSum = 0;
+  dealerAceCount = 0;
+  stayCount = players.length;
+
   clearCardImgs();
   newHand();
   dealersHand();
   dealCards();
+  removeDisableClass();
   checkDeck();
 }
 
