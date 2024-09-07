@@ -386,10 +386,10 @@ function checkPlayerSum(){
 }
 
 function removeDisableClass(){ 
-  for( let i = 0; i < players.length; i++ ) {
+  for ( let i = 0; i < players.length; i++ ) {
     let playerHitBTN = document.getElementById(`player-${i+1}-hit`)
 
-    
+
   }
 }
 
