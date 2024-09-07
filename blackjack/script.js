@@ -1,4 +1,3 @@
-// Dealer and player ace count
 let playerAceCount = 0;
 
 //Point value of dealer and player
@@ -8,9 +7,7 @@ let dealerHand = [];
 
 // Player count
 let players = [];
-
-// Used card deck
-let usedCard = [];
+let playersAceCount = [];
 
 let hidden;
 let deck;
@@ -30,10 +27,11 @@ window.onload = function() {
 
   for (let i = 0; i < numOfPlayers; i++) {
     players.push([]);
+    playersAceCount.push([]);
   }
+  
   stayCount = players.length;
   console.log(`Starting value for stay count is: ${stayCount}`);
-  
 
   let numOfDecks = parseInt(prompt("Please enter the number of decks: "));
 
@@ -46,7 +44,7 @@ window.onload = function() {
 
 function startGame() {
 
-    document.getElementById('newGame').addEventListener("click", test);
+    document.getElementById('newGame').addEventListener("click", newGame);
 }
 
 function buildDeck(numofDeck) {
@@ -130,6 +128,16 @@ function checkAce(card) {
   return 0;
 }
 
+function playersCheckAce(index,card) {
+  // whos hand is the ace in?
+  let player = playersAceCount[index];
+  // then add to that players count
+  if (card[0] == "A"){
+    player++;
+    console.log(`${index} ace count is ${index[0]}`);
+  }
+}
+
 function reduceAce(playerSum, playerAceCount) {
   while ( playerSum > 21 && playerAceCount > 0 ) {
     playerSum -= 10;
@@ -141,7 +149,7 @@ function reduceAce(playerSum, playerAceCount) {
 function hit(index) {
 
   let playerSumSpan = document.getElementById(`player-${index+1}-sum`);
-  let playerSum = playerSumSpan.innerHTML
+  //let playerSum = playerSumSpan.innerHTML
   //console.log(playerSum);
   
     let cardImg = document.createElement("img");
@@ -160,7 +168,7 @@ function hit(index) {
     document.getElementById(`player-${index + 1}-cards`).append(cardImg);
   
     if (reduceAce(playerSumSpan, playerAceCount) > 21 ) {
-      canHit = false;
+      //canHit = false;
     }
     checkPlayerSum();
 }
@@ -244,7 +252,7 @@ function dealCards() {
       cardImg.setAttribute("class", `card-img`);
       cardImg.src = `./cards/${card}.png`
       // Adding to ace count
-      playerAceCount += checkAce(card);
+      playersCheckAce(i,card);
       // Adding card to display
       document.getElementById(`player-${i+1}-cards`).append(cardImg);
     }, cards * delay);
@@ -384,7 +392,7 @@ function checkPlayerSum(){
 
     if (playerSum > 21) {
       playerHitBTN.classList.add('disabled');
-      stayCount++;
+      stayCount--;
     }
   }
 }
@@ -396,11 +404,12 @@ function removeDisableClass(){
   }
 }
 
-function test() {
+function newGame() {
   dealerSum = 0;
   dealerAceCount = 0;
   stayCount = players.length;
-
+  console.log(stayCount);
+  
   clearCardImgs();
   newHand();
   dealersHand();
@@ -408,5 +417,3 @@ function test() {
   removeDisableClass();
   checkDeck();
 }
-
-// JS sleep or sweep fuctions
