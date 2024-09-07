@@ -389,7 +389,7 @@ function checkPlayerSum(){
   }
 }
 
-function removeDisableClass(){ 
+function removeDisableClass(){
   for ( let i = 0; i < players.length; i++ ) {
     let playerHitBTN = document.getElementById(`player-${i+1}-hit`)
     playerHitBTN.classList.remove('disabled');
