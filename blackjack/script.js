@@ -73,7 +73,7 @@ function shuffleDeck() {
   }
 }
 
-function dealersHand() {
+export function dealersHand() {
 
   let hiddenCardImg = document.createElement("img");
   hiddenCardImg.src = `./cards/BACK.png`;
@@ -121,7 +121,7 @@ function soft17(){
 }
 
 // Funtion to check if card is an ace
-function checkAce(card) {
+export function checkAce(card) {
   if (card[0] == "A"){
     return 1;
   }
@@ -129,7 +129,7 @@ function checkAce(card) {
 }
 
 // Funtion to reduce player some when sum is less than 21 and they have an ace in hand
-function reduceAce(playerSum, playerAceCount) {
+export function reduceAce(playerSum, playerAceCount) {
   while ( playerSum > 21 && playerAceCount > 0 ) {
     playerSum -= 10;
     playerAceCount -= 1;
@@ -207,7 +207,7 @@ function stay(){
 }
 
 // Geting the card value
-function getValue(card){
+export function getValue(card){
     let total = 0;
     let data = card.split("-");
     let value = data[0];
