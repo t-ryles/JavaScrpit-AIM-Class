@@ -1,22 +1,20 @@
-let playerAceCount = 0;
-
-//Point value of dealer and player
+// Dealers variables
 let dealerSum = 0;
 let dealerAceCount = 0;
 let dealerHand = [];
 
-// Player count
+// Player(s) variables
 let players = [];
-let playersAceCount = [];
+let playersAceCounts = [];
 
+// Global variables
 let hidden;
 let deck;
 let stayCount;
-let canHit = true;
 
-// Allows player to draw card while playerSum <= 21
+//window.onload = initializeGame;
 
-window.onload = function() {
+function initializeGame() {
   startGame();
   
   let numOfPlayers = parseInt(prompt("Please enter the number of players  between 1 and 4: "));
@@ -27,7 +25,7 @@ window.onload = function() {
 
   for (let i = 0; i < numOfPlayers; i++) {
     players.push([]);
-    playersAceCount.push([]);
+    playersAceCounts.push(0);
   }
   
   stayCount = players.length;
@@ -47,7 +45,7 @@ function startGame() {
     document.getElementById('newGame').addEventListener("click", newGame);
 }
 
-function buildDeck(numofDeck) {
+export function buildDeck(numofDeck) {
   let values = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
   let suites = ["C", "D", "H", "S"];
   deck = [];
@@ -61,7 +59,8 @@ function buildDeck(numofDeck) {
       }
     }
     deck = deck.concat(subDeck);
-  }  
+  } 
+  return deck;
 }
 
 function shuffleDeck() {
@@ -121,6 +120,7 @@ function soft17(){
   }
 }
 
+// Funtion to check if card is an ace
 function checkAce(card) {
   if (card[0] == "A"){
     return 1;
@@ -128,16 +128,7 @@ function checkAce(card) {
   return 0;
 }
 
-function playersCheckAce(index,card) {
-  // whos hand is the ace in?
-  let player = playersAceCount[index];
-  // then add to that players count
-  if (card[0] == "A"){
-    player++;
-    console.log(`${index} ace count is ${index[0]}`);
-  }
-}
-
+// Funtion to reduce player some when sum is less than 21 and they have an ace in hand
 function reduceAce(playerSum, playerAceCount) {
   while ( playerSum > 21 && playerAceCount > 0 ) {
     playerSum -= 10;
@@ -146,6 +137,7 @@ function reduceAce(playerSum, playerAceCount) {
   return playerSum;
 }
 
+// Hit funtion when user clicks button
 function hit(index) {
 
   let playerSumSpan = document.getElementById(`player-${index+1}-sum`);
@@ -163,16 +155,19 @@ function hit(index) {
     
     playerSumSpan.textContent = currentValue + getValue(card);
 
-    playerAceCount += checkAce(card);
+    // Checking and updating players ace count
+    playersAceCounts[index] += checkAce(card);
+
     cardImg.setAttribute("class", `card-img`);
     document.getElementById(`player-${index + 1}-cards`).append(cardImg);
   
-    if (reduceAce(playerSumSpan, playerAceCount) > 21 ) {
+    if (reduceAce(playerSumSpan, playersAceCounts[index]) > 21 ) {
       //canHit = false;
     }
     checkPlayerSum();
 }
 
+// Stay funtion when user clicks button
 function stay(){
   dealerSum = reduceAce(dealerSum, dealerAceCount);
   console.log(dealerSum);
@@ -185,7 +180,7 @@ function stay(){
   playersSpan.forEach((span, i) => {
 
     let playerSum = parseInt(span.textContent);
-    playerSum = reduceAce(playerSum, playerAceCount);
+    playerSum = reduceAce(playerSum, playersAceCounts[i]);
     span.textContent = playerSum;
 
     let playerMessageTag = document.querySelector(`#player-${i+1}-message`);
@@ -211,6 +206,7 @@ function stay(){
   document.getElementById('dealer-sum').innerHTML = dealerSum;
 }
 
+// Geting the card value
 function getValue(card){
     let total = 0;
     let data = card.split("-");
@@ -251,19 +247,23 @@ function dealCards() {
       // Adding card CSS class
       cardImg.setAttribute("class", `card-img`);
       cardImg.src = `./cards/${card}.png`
-      // Adding to ace count
-      playersCheckAce(i,card);
+
+      // Checking and updating players ace count
+      playersAceCounts[i] += checkAce(card);
+      console.log(`Player ${[i + 1]} has ${playersAceCounts[i]} aces.`);
+
       // Adding card to display
       document.getElementById(`player-${i+1}-cards`).append(cardImg);
     }, cards * delay);
     }
   })(i, 1000);
     }
+
     checkPlayerSum();
     checkDeck();
 }
 
-// Adding players to HTML
+// Building HTML for X number of player
 function buildPlayers(numOfPlayers) {
   for (let i = 0; i < numOfPlayers; i++) {
     // Getting Div for players 
@@ -345,6 +345,8 @@ function newHand() {
     while (players[i].length > 0) {
       players[i].pop();
     }
+    // Reseting ace count
+    playersAceCounts[i] = 0;
   }
 
   // Clearing player(s) messgae
