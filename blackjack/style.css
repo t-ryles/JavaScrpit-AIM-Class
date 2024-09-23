@@ -1,7 +1,10 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
-  background-image: url('./green-felt-background-texture-poker-casino-table_434420-1498.jpg');
+  /*background-image: url('./green-felt-background-texture-poker-casino-table_434420-1498.jpg');*/
+  background-image: url("./20653.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #playersBox {
@@ -19,8 +22,8 @@ body {
 }
 
 .card-img {
-  height: 175px;
-  width: 125px;
+  height: 225px;
+  width: 175px;
   margin: 4px;
   border-radius: 5px;
   box-shadow: 3px 4px 8px #3d3d41;
@@ -29,6 +32,12 @@ body {
 button {
   margin: 4px;
   border-radius: 5px;
+}
+
+.playerMessage {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3d3d41;
 }
 
 .hit {

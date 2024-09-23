@@ -1,6 +1,5 @@
-import { expect, test, describe, it, beforeEach } from 'vitest';
-import { buildDeck, checkAce, getValue, reduceAce } from '../script';
-
+import { expect, test, describe} from 'vitest';
+import { buildDeck, checkAce, getValue, reduceAce, shuffleDeck } from '../script';
 
 describe('Blackjack buildDeck', () => {
   test('Should return a deck of cards', () =>  {
@@ -50,4 +49,31 @@ describe('Blackjack reduceAce', () => {
     expect(reduceAce(21,1)).toBe(21);
     expect(reduceAce(18,1)).toBe(18);
   });
+});
+
+describe('Blackjack shuffleDeck', () => { 
+
+  const deck = ['A-C', '2-D', '3-H', '4-S'];
+
+  test('The length of the deck should not change', () => {
+    let orginalDeckLength = deck.length;
+    shuffleDeck(deck);
+    expect(deck.length).toBe(orginalDeckLength);
+  })
+
+  test('Should contain the same cards after shuffling', () => {
+    const originalDeck = [...deck]; // Make a copy of the original deck
+    shuffleDeck(deck);
+
+    expect(deck).toEqual(expect.arrayContaining(originalDeck));
+    expect(originalDeck).toEqual(expect.arrayContaining(deck));
+  });
+
+  test('Should shuffle deck into a different order', () => {
+    let originalDeck = [...deck];
+    let newDeck = shuffleDeck(deck);
+
+    // Might fail due to small deck size;
+    expect(newDeck).not.toEqual(originalDeck);
+  })
 });

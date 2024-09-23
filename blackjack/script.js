@@ -14,8 +14,7 @@ let stayCount;
 
 //window.onload = initializeGame;
 
-function initializeGame() {
-  startGame();
+window.onload = function initializeGame() {
   
   let numOfPlayers = parseInt(prompt("Please enter the number of players  between 1 and 4: "));
 
@@ -38,11 +37,12 @@ function initializeGame() {
   buildPlayers(numOfPlayers);
   dealersHand();
   dealCards();
+  startGame();
+
 }
 
 function startGame() {
-
-    document.getElementById('newGame').addEventListener("click", newGame);
+  document.getElementById('newGame').addEventListener("click", newGame);
 }
 
 export function buildDeck(numofDeck) {
@@ -63,7 +63,7 @@ export function buildDeck(numofDeck) {
   return deck;
 }
 
-function shuffleDeck() {
+export function shuffleDeck() {
   for (let i = 0; i < deck.length; i++) {
     let j = Math.floor(Math.random() * deck.length);
 
@@ -73,7 +73,57 @@ function shuffleDeck() {
   }
 }
 
-export function dealersHand() {
+// Funtion to check if card is an ace
+export function checkAce(card) {
+  if (card[0] == "A"){
+    return 1;
+  }
+  return 0;
+}
+
+// Funtion to reduce player some when sum is less than 21 and they have an ace in hand
+export function reduceAce(playerSum, playerAceCount) {
+  while ( playerSum > 21 && playerAceCount > 0 ) {
+    playerSum -= 10;
+    playerAceCount -= 1;
+  }
+  return playerSum;
+}
+
+// Geting the card value
+export function getValue(card){
+  let total = 0;
+  let data = card.split("-");
+  let value = data[0];
+
+if (isNaN(value)) { // Checking for A, J, Q, K
+  if (value === "A") {
+    total += 11;
+  } else {
+    total += 10;
+  }
+} else {
+  total += parseInt(value); // Return int of value
+}
+return total;
+}
+
+export function clearCardImgs() {
+
+  let dealersImg = document.getElementById('dealer-cards');
+  while (dealersImg.firstChild) {
+    dealersImg.removeChild(dealersImg.firstChild);
+  }
+
+for (let i = 0; i < players.length; i++) {
+  const playerImg = document.getElementById(`player-${i+1}-cards`);
+  while (playerImg.firstChild) {
+    playerImg.removeChild(playerImg.firstChild);
+  }
+}
+}
+
+function dealersHand() {
 
   let hiddenCardImg = document.createElement("img");
   hiddenCardImg.src = `./cards/BACK.png`;
@@ -120,23 +170,6 @@ function soft17(){
   }
 }
 
-// Funtion to check if card is an ace
-export function checkAce(card) {
-  if (card[0] == "A"){
-    return 1;
-  }
-  return 0;
-}
-
-// Funtion to reduce player some when sum is less than 21 and they have an ace in hand
-export function reduceAce(playerSum, playerAceCount) {
-  while ( playerSum > 21 && playerAceCount > 0 ) {
-    playerSum -= 10;
-    playerAceCount -= 1;
-  }
-  return playerSum;
-}
-
 // Hit funtion when user clicks button
 function hit(index) {
 
@@ -160,10 +193,11 @@ function hit(index) {
 
     cardImg.setAttribute("class", `card-img`);
     document.getElementById(`player-${index + 1}-cards`).append(cardImg);
-  
-    if (reduceAce(playerSumSpan, playersAceCounts[index]) > 21 ) {
-      //canHit = false;
+
+    if (reduceAce(playerSumSpan, playersAceCounts[i]) > 21 ) {
+      checkPlayerSum();
     }
+
     checkPlayerSum();
 }
 
@@ -206,26 +240,9 @@ function stay(){
   document.getElementById('dealer-sum').innerHTML = dealerSum;
 }
 
-// Geting the card value
-export function getValue(card){
-    let total = 0;
-    let data = card.split("-");
-    let value = data[0];
-
-  if (isNaN(value)) { // Checking for A, J, Q, K
-    if (value === "A") {
-      total += 11;
-    } else {
-      total += 10;
-    }
-  } else {
-    total += parseInt(value); // Return int of value
-  }
-  return total;
-}
-
 // Deals cards to players from top of deck
 function dealCards() {
+
   for ( let i = 0; i < players.length; i++) {
     // Get player span ID
     let playerSumSpan = document.getElementById(`player-${i+1}-sum`);
@@ -259,7 +276,6 @@ function dealCards() {
   })(i, 1000);
     }
 
-    checkPlayerSum();
     checkDeck();
 }
 
@@ -313,6 +329,7 @@ function buildPlayers(numOfPlayers) {
 
     let playerMessage = document.createElement('p');
     playerMessage.setAttribute('id', `player-${i+1}-message`);
+    playerMessage.setAttribute('class', `playerMessage`);
     playerMessage.textContent = "";
     playerDiv.appendChild(playerMessage);
 
@@ -325,8 +342,7 @@ function buildPlayers(numOfPlayers) {
       stayCount--;
       console.log(`Stay count = ${stayCount}`);
       
-
-      if (stayCount === 0) {
+      if (stayCount <= 0) {
         stay();
       }
     });
@@ -354,28 +370,6 @@ function newHand() {
     let message = document.getElementById(`player-${i+1}-message`);
     message.textContent = "";
   } 
-}
-
-function clearCardImgs() {
-
-  for (let i = 0; i < dealerHand.length; i++) {
-    let dealersImg = document.getElementById('dealer-cards');
-    let image = dealersImg.querySelector('img')
-    while (image) {
-      dealersImg.removeChild(image);
-      image = dealersImg.querySelector('img');
-    }
-  }
-
-  for (let i = 0; i < players.length; i++) {
-    const playerImg = document.getElementById(`player-${i+1}-cards`);
-    let image = playerImg.querySelector('img');
-  
-    while (image) {
-      playerImg.removeChild(image)
-      image = playerImg.querySelector('img');
-    }
-  }
 }
 
 function checkDeck() {
@@ -407,6 +401,7 @@ function removeDisableClass(){
 }
 
 function newGame() {
+  document.getElementById('dealer-sum').innerHTML = "";
   dealerSum = 0;
   dealerAceCount = 0;
   stayCount = players.length;
