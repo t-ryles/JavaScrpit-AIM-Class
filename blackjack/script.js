@@ -12,7 +12,6 @@ let hidden;
 let deck;
 let stayCount;
 
-//window.onload = initializeGame;
 
 window.onload = function initializeGame() {
   
@@ -28,7 +27,6 @@ window.onload = function initializeGame() {
   }
   
   stayCount = players.length;
-  console.log(`Starting value for stay count is: ${stayCount}`);
 
   let numOfDecks = parseInt(prompt("Please enter the number of decks: "));
 
@@ -194,10 +192,6 @@ function hit(index) {
     cardImg.setAttribute("class", `card-img`);
     document.getElementById(`player-${index + 1}-cards`).append(cardImg);
 
-    if (reduceAce(playerSumSpan, playersAceCounts[i]) > 21 ) {
-      checkPlayerSum();
-    }
-
     checkPlayerSum();
 }
 
@@ -267,7 +261,6 @@ function dealCards() {
 
       // Checking and updating players ace count
       playersAceCounts[i] += checkAce(card);
-      console.log(`Player ${[i + 1]} has ${playersAceCounts[i]} aces.`);
 
       // Adding card to display
       document.getElementById(`player-${i+1}-cards`).append(cardImg);
@@ -386,7 +379,7 @@ function checkPlayerSum(){
     let playerSumSpan = document.getElementById(`player-${i+1}-sum`);
     let playerSum = playerSumSpan.innerHTML;
 
-    if (playerSum > 21) {
+    if (reduceAce(playerSum, playersAceCounts[i]) > 21 ) {
       playerHitBTN.classList.add('disabled');
       stayCount--;
     }

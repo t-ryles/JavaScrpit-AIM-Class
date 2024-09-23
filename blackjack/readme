@@ -1,6 +1,16 @@
 # AIM Specialization in JavaScript - Blackjack
 Built by: Taj-Hakeem Ryles
 
+## Project Description
+This is a browser based Blackjack card games built using HTML, CSS, and JavaScript.
+It allows for multiple player and simulates a real Blackjack game play.
+Some of the key features are:
+    - Multiplayer support
+    - Multi deck play
+    - Shuffle deck 
+    - Ace handling logic
+    - Win/Lose conditions
+
 ## Tech Stack Used
 - HTML & CSS : UI
 - JavaScript : Game Logic
@@ -32,18 +42,16 @@ The following are **optional** features:
 The following **additional** features are implemented:
 
 - [x] Implamented unit tests for some of the functions.
+- [x] Active website
 
 ## Video Walkthrough
 
 Heres a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://imgur.com/TVmE1g1' title='BLKJCK Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  
-<!-- Recommended tools:
-[ScreenToGif](https://www.screentogif.com/) for Windows
- -->
+GIF created with ...  screentogif.com
 
 ## Notes
 
